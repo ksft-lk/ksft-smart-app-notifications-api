@@ -1,4 +1,4 @@
-import {NodeEnvironment} from '../../shared/models/core';
+import {NodeEnvironment} from '@shared/models/env';
 
 const env = process.env;
 

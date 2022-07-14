@@ -16,6 +16,38 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@config/*": [
+        "src/app/core/config/*"
+      ],
+      "@interceptors/*": [
+        "src/app/core/interceptors/*"
+      ],
+      "@constants/*": [
+        "src/app/core/constants/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@features/*": [
+        "src/app/features/*"
+      ],
+      "@email-templates/*": [
+        "src/app/features/email-templates/*"
+      ],
+      "@emails/*": [
+        "src/app/features/emails/*"
+      ],
+      "@notifications/*": [
+        "src/app/features/notifications/*"
+      ]
+    }
   }
 }
