@@ -1,0 +1,10 @@
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {DatabaseRepository} from '@shared/repositories/database.repository';
+import {EmailTemplate, EmailTemplateDocument} from '@email-templates/entities/email-template.entity';
+
+export class EmailTemplatesRepository extends DatabaseRepository<EmailTemplate, EmailTemplateDocument> {
+  constructor(@InjectModel(EmailTemplate.name) private readonly roleDocumentModel: Model<EmailTemplateDocument>) {
+    super(roleDocumentModel);
+  }
+}

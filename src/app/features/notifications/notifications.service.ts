@@ -1,15 +1,18 @@
 import {Injectable} from '@nestjs/common';
 import {CreateNotificationDto} from './dto/create-notification.dto';
 import {UpdateNotificationDto} from './dto/update-notification.dto';
+import {NotificationsRepository} from '@notifications/notifications.repository';
+import {DatabaseService} from '@shared/services/database.service';
+import {Notification, NotificationDocument} from '@notifications/entities/notification.entity';
 
 @Injectable()
-export class NotificationsService {
-  create(createNotificationDto: CreateNotificationDto) {
-    return 'This action adds a new notification';
+export class NotificationsService extends DatabaseService<Notification, NotificationDocument> {
+  constructor(private readonly notificationsRepository: NotificationsRepository) {
+    super(notificationsRepository);
   }
 
-  findAll() {
-    return `This action returns all notifications`;
+  create(createNotificationDto: CreateNotificationDto) {
+    return 'This action adds a new notification';
   }
 
   findOne(id: number) {
