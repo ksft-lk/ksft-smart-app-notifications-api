@@ -1,18 +1,18 @@
 import {CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor} from '@nestjs/common';
 import {map, Observable, tap} from 'rxjs';
-import {ApiResponse, ApiResponseStatus} from '@shared/models/api/api-response';
-import {Request} from '@shared/models/api/request';
+import {Payload, PayloadStatus} from '@shared/models/api/payload';
+import {Request} from '@shared/models/api/request.model';
 
 @Injectable()
-export class ApiResponseInterceptor<T> implements NestInterceptor<T, ApiResponse<T>> {
+export class ApiResponseInterceptor<T> implements NestInterceptor<T, Payload<T>> {
   private readonly logger = new Logger(ApiResponseInterceptor.name);
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponse<T>> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<Payload<T>> {
     context.switchToHttp().getRequest<Request>().start = Date.now();
 
     return next.handle().pipe(
       map(value => ({
-        status: ApiResponseStatus.SUCCESS,
+        status: PayloadStatus.SUCCESS,
         message: null,
         data: typeof value !== 'undefined' && typeof value !== 'function' ? value : null,
       })),

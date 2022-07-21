@@ -1,4 +1,4 @@
-export enum ApiResponseStatus {
+export enum PayloadStatus {
   FAIL = 'FAIL',
   SUCCESS = 'SUCCESS',
 }
@@ -6,8 +6,8 @@ export enum ApiResponseStatus {
 /**
  * Base model for API responses
  */
-export interface ApiResponse<T> {
-  status: ApiResponseStatus;
+export interface Payload<T> {
+  status: PayloadStatus;
   message: string | null;
   data: T;
 }

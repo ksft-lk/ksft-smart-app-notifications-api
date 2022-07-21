@@ -1,7 +1,7 @@
 import {Prop} from '@nestjs/mongoose';
 import {ObjectId, Types} from 'mongoose';
-import {DATABASE_COLLECTIONS} from '@constants/database';
-import {DocumentStatus} from '@shared/models/database/document-metadata';
+import {DATABASE_COLLECTIONS} from '@constants/database.constants';
+import {DocumentStatus} from '@shared/models/database/document-metadata.model';
 
 export class PersistableDocument {
   @Prop({enum: [...Object.values(DocumentStatus)]})

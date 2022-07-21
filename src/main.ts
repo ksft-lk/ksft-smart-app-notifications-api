@@ -1,12 +1,12 @@
 import {NestFactory} from '@nestjs/core';
 import {Logger, ValidationPipe} from '@nestjs/common';
-import helmet from 'helmet';
+import {ConfigService} from '@nestjs/config';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import helmet from 'helmet';
 import {AppModule} from './app/app.module';
-import {NODE_ENV, PORT} from '@constants/env';
-import {DATABASE_NAME} from '@constants/database';
 import {ApiResponseInterceptor} from '@interceptors/api-response.interceptor';
-import {ApiErrorFilter} from '@core/filters/api-error.filter';
+import {ApiErrorFilter} from '@filters/api-error.filter';
+import {EnvironmentConfig} from '@shared/models/environment-config.model';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
@@ -23,31 +23,30 @@ const bootstrap = async () => {
   app.useGlobalFilters(new ApiErrorFilter());
 
   app.enableCors();
+
   app.use(helmet());
 
   const config = new DocumentBuilder()
-    .setTitle('KSFT Smart App auth API')
-    .setDescription('Authentication service for the Smart App')
+    .setTitle('KSFT Smart App Notification API')
+    .setDescription('Notification API service for the Smart App')
     .setVersion('1.0.0')
     .build();
 
-  SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
-  await app.listen(PORT);
+  const configService = app.get(ConfigService<EnvironmentConfig, true>);
+
+  await app.listen(configService.get('PORT'));
+
+  const currentTime = new Date();
+
+  Logger.log(`UTC Offset: ${currentTime.getTimezoneOffset()}`);
+  Logger.log(`Port: ${configService.get('PORT')}`);
+  Logger.log(`Node environment: ${configService.get('NODE_ENV')}`);
+  Logger.log(`Database: ${configService.get('DATABASE_NAME')}`);
 };
 
-bootstrap()
-  .then(() => {
-    const currentTime = new Date();
-
-    Logger.log(`UTC Offset: ${currentTime.getTimezoneOffset()}`);
-    Logger.log(`Port: ${PORT}`);
-    Logger.log(`Node environment: ${NODE_ENV}`);
-    Logger.log(`Database: ${DATABASE_NAME}`);
-
-    return;
-  })
-  .catch(reason => {
-    Logger.warn('Failed to start the server');
-    Logger.error(reason);
-  });
+bootstrap().catch(reason => {
+  Logger.warn('Failed to start the server');
+  Logger.error(reason);
+});

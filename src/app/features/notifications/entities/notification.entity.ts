@@ -1,12 +1,11 @@
-import {PersistableDocument} from '@shared/models/database/persistable-document';
-import {Document, ObjectId} from 'mongoose';
-import {DocumentTimestampConfig} from '@shared/models/database/document-metadata';
+import {PersistableDocument} from '@shared/models/database/persistable-document.model';
 import {Schema, SchemaFactory} from '@nestjs/mongoose';
-import {DATABASE_COLLECTIONS} from '@constants/database';
+import {DATABASE_COLLECTIONS} from '@constants/database.constants';
+import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
 @Schema({timestamps: true, collection: DATABASE_COLLECTIONS.NOTIFICATIONS})
 export class Notification extends PersistableDocument {}
 
-export type NotificationDocument = Notification & Document<ObjectId> & DocumentTimestampConfig;
+export type NotificationDocument = Notification & ReadableDocument;
 
 export const NotificationSchema = SchemaFactory.createForClass(Notification);

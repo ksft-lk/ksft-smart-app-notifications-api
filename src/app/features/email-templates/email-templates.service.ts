@@ -15,15 +15,7 @@ export class EmailTemplatesService extends DatabaseService<EmailTemplate, EmailT
     return 'This action adds a new emailTemplate';
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} emailTemplate`;
-  }
-
-  update(id: number, updateEmailTemplateDto: UpdateEmailTemplateDto) {
+  update(id: string, updateEmailTemplateDto: UpdateEmailTemplateDto) {
     return `This action updates a #${id} emailTemplate`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} emailTemplate`;
   }
 }

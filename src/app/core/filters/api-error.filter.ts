@@ -1,7 +1,7 @@
 import {ArgumentsHost, Catch, ExceptionFilter, HttpException, Logger} from '@nestjs/common';
-import {ApiResponseStatus} from '@shared/models/api/api-response';
-import {Request} from '@shared/models/api/request';
-import {Response} from '@shared/models/api/response';
+import {PayloadStatus} from '@shared/models/api/payload';
+import {Request} from '@shared/models/api/request.model';
+import {Response} from '@shared/models/api/response.model';
 
 @Catch()
 export class ApiErrorFilter implements ExceptionFilter {
@@ -31,7 +31,7 @@ export class ApiErrorFilter implements ExceptionFilter {
     this.logger.log(`${method} ${path} => ${status}. Took ${time} ms`);
 
     response.status(status).json({
-      status: ApiResponseStatus.FAIL,
+      status: PayloadStatus.FAIL,
       message: exception.message,
       data: data || null,
     });

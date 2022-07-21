@@ -27,11 +27,20 @@
       "@config/*": [
         "src/app/core/config/*"
       ],
-      "@interceptors/*": [
-        "src/app/core/interceptors/*"
-      ],
       "@constants/*": [
         "src/app/core/constants/*"
+      ],
+      "@decorators/*": [
+        "src/app/core/decorators/*"
+      ],
+      "@filters/*": [
+        "src/app/core/filters/*"
+      ],
+      "@guards/*": [
+        "src/app/core/guards/*"
+      ],
+      "@interceptors/*": [
+        "src/app/core/interceptors/*"
       ],
       "@shared/*": [
         "src/app/shared/*"

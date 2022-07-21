@@ -11,19 +11,11 @@ export class NotificationsService extends DatabaseService<Notification, Notifica
     super(notificationsRepository);
   }
 
-  create(createNotificationDto: CreateNotificationDto) {
+  create(dto: CreateNotificationDto) {
     return 'This action adds a new notification';
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} notification`;
-  }
-
-  update(id: number, updateNotificationDto: UpdateNotificationDto) {
+  update(id: string, dto: UpdateNotificationDto) {
     return `This action updates a #${id} notification`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} notification`;
   }
 }

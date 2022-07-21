@@ -1,7 +1,7 @@
 import {ObjectId} from 'mongoose';
-import {ReadableDocument} from '@shared/models/database/readable-document';
+import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
-export class User extends ReadableDocument {
+export class UserDto extends ReadableDocument {
   firstName: string;
   lastName: string;
   email: string;

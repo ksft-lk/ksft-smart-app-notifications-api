@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
-import {EmailTemplatesService} from './email-templates.service';
-import {EmailTemplatesController} from './email-templates.controller';
+import {EmailTemplatesService} from '@email-templates/email-templates.service';
+import {EmailTemplatesController} from '@email-templates/email-templates.controller';
 import {EmailTemplate, EmailTemplateSchema} from '@email-templates/entities/email-template.entity';
 import {EmailTemplatesRepository} from '@email-templates/email-templates.repository';
 

@@ -1,6 +1,7 @@
 import {Document, FilterQuery, Model, ProjectionType, QueryOptions, SaveOptions, UpdateQuery} from 'mongoose';
-import {PersistableDocument} from '@shared/models/database/persistable-document';
-import {DocumentStatus} from '@shared/models/database/document-metadata';
+import {DocumentStatus} from '@shared/models/database/document-metadata.model';
+import {PersistableDocument} from '@shared/models/database/persistable-document.model';
+import {UserDto} from '@shared/dto/database/user.dto';
 
 export class DatabaseRepository<T, S extends T & Document & PersistableDocument> {
   constructor(private readonly model: Model<S>) {}
@@ -27,7 +28,7 @@ export class DatabaseRepository<T, S extends T & Document & PersistableDocument>
     id: string,
     projection?: ProjectionType<S> | null | undefined,
     options?: QueryOptions<S> | null | undefined,
-  ): Promise<S> {
+  ): Promise<S | null> {
     return await this.model.findById(id, projection, options).exec();
   }
 
@@ -35,11 +36,11 @@ export class DatabaseRepository<T, S extends T & Document & PersistableDocument>
     filterQuery: FilterQuery<S>,
     projection?: ProjectionType<S> | null | undefined,
     options?: QueryOptions<S> | null | undefined,
-  ): Promise<S | undefined> {
+  ): Promise<S | null> {
     return await this.model.findOne(filterQuery, projection, options).exec();
   }
 
-  async updateOneById(id: string, query: UpdateQuery<T>, options?: QueryOptions<T>): Promise<S> {
+  async updateOneById(id: string, query: UpdateQuery<T>, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model.findByIdAndUpdate(id, query, options).exec();
   }
 
@@ -47,17 +48,18 @@ export class DatabaseRepository<T, S extends T & Document & PersistableDocument>
     filterQuery: FilterQuery<S>,
     updateQuery: UpdateQuery<T>,
     options?: QueryOptions<T>,
-  ): Promise<S | undefined> {
+  ): Promise<S | null> {
     return await this.model.findOneAndUpdate(filterQuery, updateQuery, options).exec();
   }
 
-  async archiveOneById(id: string, options?: QueryOptions<T>): Promise<S> {
+  async archiveOneById(user: UserDto, id: string, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model
       .findByIdAndUpdate(
         id,
         {
           $set: {
             status: DocumentStatus.ARCHIVED,
+            updatedBy: user._id,
           },
         },
         options,
@@ -65,13 +67,14 @@ export class DatabaseRepository<T, S extends T & Document & PersistableDocument>
       .exec();
   }
 
-  async archiveOneByQuery(filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | undefined> {
+  async archiveOneByQuery(user: UserDto, filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model
       .findOneAndUpdate(
         filterQuery,
         {
           $set: {
             status: DocumentStatus.ARCHIVED,
+            updatedBy: user._id,
           },
         },
         options,
@@ -79,11 +82,11 @@ export class DatabaseRepository<T, S extends T & Document & PersistableDocument>
       .exec();
   }
 
-  async removeOneById(id: string, options?: QueryOptions<T>): Promise<S> {
+  async removeOneById(id: string, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model.findByIdAndDelete(id, options).exec();
   }
 
-  async removeOneByQuery(filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | undefined> {
+  async removeOneByQuery(filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model.findOneAndDelete(filterQuery, options).exec();
   }
 }

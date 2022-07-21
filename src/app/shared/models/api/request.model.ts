@@ -1,7 +1,7 @@
 import {Request as ExpressRequest} from 'express';
-import {User} from '@shared/documents/user';
+import {UserDto} from '@shared/dto/database/user.dto';
 
 export type Request = ExpressRequest & {
   start: number;
-  user: User;
+  user: UserDto;
 };
