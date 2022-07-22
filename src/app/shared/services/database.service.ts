@@ -1,9 +1,9 @@
 import {DatabaseRepository} from '@shared/repositories/database.repository';
-import {Document, FilterQuery, ProjectionType, QueryOptions, UpdateQuery} from 'mongoose';
-import {PersistableDocument} from '@shared/models/database/persistable-document.model';
+import {FilterQuery, ProjectionType, QueryOptions, UpdateQuery} from 'mongoose';
 import {UserDto} from '@shared/dto/database/user.dto';
+import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
-export class DatabaseService<T, S extends T & Document & PersistableDocument> {
+export class DatabaseService<T, S extends T & ReadableDocument> {
   constructor(private readonly repository: DatabaseRepository<T, S>) {}
 
   async findRaw(

@@ -1,9 +1,9 @@
-import {Document, FilterQuery, Model, ProjectionType, QueryOptions, SaveOptions, UpdateQuery} from 'mongoose';
+import {FilterQuery, Model, ProjectionType, QueryOptions, SaveOptions, UpdateQuery} from 'mongoose';
 import {DocumentStatus} from '@shared/models/database/document-metadata.model';
-import {PersistableDocument} from '@shared/models/database/persistable-document.model';
 import {UserDto} from '@shared/dto/database/user.dto';
+import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
-export class DatabaseRepository<T, S extends T & Document & PersistableDocument> {
+export class DatabaseRepository<T, S extends T & ReadableDocument> {
   constructor(private readonly model: Model<S>) {}
 
   async create(data: T, options?: SaveOptions): Promise<S> {
