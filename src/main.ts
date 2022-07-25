@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import {NestFactory} from '@nestjs/core';
+import {HttpAdapterHost, NestFactory} from '@nestjs/core';
 import {Logger, ValidationPipe} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
@@ -21,7 +21,7 @@ const bootstrap = async () => {
 
   app.useGlobalInterceptors(new ApiResponseInterceptor());
 
-  app.useGlobalFilters(new ApiErrorFilter());
+  app.useGlobalFilters(new ApiErrorFilter(app.get(HttpAdapterHost)));
 
   app.enableCors();
 
@@ -30,7 +30,7 @@ const bootstrap = async () => {
   const config = new DocumentBuilder()
     .setTitle('KSFT Smart App Notification API')
     .setDescription('Notification API service for the Smart App')
-    .setVersion('0.0.1')
+    .setVersion('0.0.2')
     .build();
 
   SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config));
@@ -48,6 +48,6 @@ const bootstrap = async () => {
 };
 
 bootstrap().catch(reason => {
-  Logger.warn('Failed to start the server');
-  Logger.error(reason);
+  console.warn('Failed to start the server');
+  console.error(reason);
 });
