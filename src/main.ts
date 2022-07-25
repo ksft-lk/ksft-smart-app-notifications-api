@@ -13,10 +13,10 @@ const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
   );
 
   app.useGlobalInterceptors(new ApiResponseInterceptor());
@@ -27,7 +27,11 @@ const bootstrap = async () => {
 
   app.use(helmet());
 
-  const config = new DocumentBuilder().setTitle('KSFT Smart App Notification API').setDescription('Notification API service for the Smart App').setVersion('1.0.0').build();
+  const config = new DocumentBuilder()
+    .setTitle('KSFT Smart App Notification API')
+    .setDescription('Notification API service for the Smart App')
+    .setVersion('1.0.0')
+    .build();
 
   SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
