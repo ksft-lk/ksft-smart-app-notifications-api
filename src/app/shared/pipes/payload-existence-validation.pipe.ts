@@ -9,7 +9,7 @@ export class PayloadExistenceValidationPipe implements PipeTransform {
       case 'undefined':
         throw new BadRequestException('Payload should not be empty');
       case 'object':
-        if (payload === null || !Object.keys(payload).length) {
+        if (payload === null || (Array.isArray(payload) && !payload.length) || !Object.keys(payload).length) {
           throw new BadRequestException('Payload should not be empty');
         }
 

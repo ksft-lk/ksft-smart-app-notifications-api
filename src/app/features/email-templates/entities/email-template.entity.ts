@@ -25,14 +25,7 @@ export class EmailTemplate extends PersistableDocumentWithName {
   @Prop({
     type: String,
   })
-  template: string;
-
-  @Prop([
-    {
-      type: String,
-    },
-  ])
-  keys: string[];
+  content: string;
 }
 
 export type EmailTemplateDocument = EmailTemplate & ReadableDocument;

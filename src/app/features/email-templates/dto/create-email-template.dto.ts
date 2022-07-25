@@ -1,5 +1,5 @@
 import {OmitType} from '@nestjs/mapped-types';
-import {IsArray, IsNotEmpty, IsString} from 'class-validator';
+import {IsNotEmpty, IsString, Matches} from 'class-validator';
 import {EmailTemplate} from '@email-templates/entities/email-template.entity';
 
 export class CreateEmailTemplateDto extends OmitType(EmailTemplate, ['status', 'createdBy', 'updatedBy']) {
@@ -13,13 +13,10 @@ export class CreateEmailTemplateDto extends OmitType(EmailTemplate, ['status', '
 
   @IsString()
   @IsNotEmpty()
+  @Matches(/^[A-Z\d-_]+$/)
   tag: string;
 
   @IsString()
   @IsNotEmpty()
-  template: string;
-
-  @IsArray()
-  @IsString({each: true})
-  keys: string[];
+  content: string;
 }
