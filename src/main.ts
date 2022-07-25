@@ -30,10 +30,10 @@ const bootstrap = async () => {
   const config = new DocumentBuilder()
     .setTitle('KSFT Smart App Notification API')
     .setDescription('Notification API service for the Smart App')
-    .setVersion('1.0.0')
+    .setVersion('0.0.1')
     .build();
 
-  SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config));
 
   const configService = app.get(ConfigService<EnvironmentConfig, true>);
 
