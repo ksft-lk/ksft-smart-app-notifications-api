@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {FilterQuery, QueryOptions, UpdateQuery} from 'mongoose';
 import {DatabaseService} from '@shared/services/database.service';
-import {UserDto} from '@shared/dto/database/user.dto';
+import {User} from '@users/entities/user.entity';
 import {DocumentStatus} from '@shared/models/database/document-metadata.model';
 import {CreateEmailTemplateDto} from '@email-templates/dto/create-email-template.dto';
 import {UpdateEmailTemplateDto} from '@email-templates/dto/update-email-template.dto';
@@ -15,7 +15,7 @@ export class EmailTemplatesService extends DatabaseService<EmailTemplate, EmailT
     super(emailTemplatesRepository);
   }
 
-  async create(user: UserDto, dto: CreateEmailTemplateDto): Promise<EmailTemplateDocument> {
+  async create(user: User, dto: CreateEmailTemplateDto): Promise<EmailTemplateDocument> {
     const emailTemplate: EmailTemplate = {
       name: dto.name,
       description: dto.description,
@@ -66,7 +66,7 @@ export class EmailTemplatesService extends DatabaseService<EmailTemplate, EmailT
     return await this.emailTemplatesRepository.find(query, null, options);
   }
 
-  async update(user: UserDto, id: string, dto: UpdateEmailTemplateDto): Promise<EmailTemplateDocument | null> {
+  async update(user: User, id: string, dto: UpdateEmailTemplateDto): Promise<EmailTemplateDocument | null> {
     const updateQuery: UpdateQuery<EmailTemplate> = {
       $set: {
         ...dto,

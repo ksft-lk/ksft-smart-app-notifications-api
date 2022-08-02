@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Patch, Post, Query} from '@nestjs/common';
 import {ApiTags} from '@nestjs/swagger';
 import {RequestUser} from '@decorators/request-user.decorator';
-import {UserDto} from '@shared/dto/database/user.dto';
+import {User} from '@users/entities/user.entity';
 import {PayloadTransformationPipe} from '@shared/pipes/payload-transformation.pipe';
 import {EmailTemplatesService} from '@email-templates/email-templates.service';
 import {CreateEmailTemplateDto} from '@email-templates/dto/create-email-template.dto';
@@ -15,7 +15,7 @@ export class EmailTemplatesController {
   constructor(private readonly emailTemplatesService: EmailTemplatesService) {}
 
   @Post()
-  async create(@RequestUser() user: UserDto, @Body() dto: CreateEmailTemplateDto): Promise<EmailTemplateDocument> {
+  async create(@RequestUser() user: User, @Body() dto: CreateEmailTemplateDto): Promise<EmailTemplateDocument> {
     return await this.emailTemplatesService.create(user, dto);
   }
 
@@ -31,7 +31,7 @@ export class EmailTemplatesController {
 
   @Patch(':id')
   async update(
-    @RequestUser() user: UserDto,
+    @RequestUser() user: User,
     @Param('id') id: string,
     @Body() dto: UpdateEmailTemplateDto,
   ): Promise<EmailTemplateDocument | null> {
@@ -39,7 +39,7 @@ export class EmailTemplatesController {
   }
 
   @Delete(':id')
-  async remove(@RequestUser() user: UserDto, @Param('id') id: string): Promise<EmailTemplateDocument | null> {
+  async remove(@RequestUser() user: User, @Param('id') id: string): Promise<EmailTemplateDocument | null> {
     return this.emailTemplatesService.archiveOneById(user, id);
   }
 }

@@ -1,6 +1,6 @@
 import {DatabaseRepository} from '@shared/repositories/database.repository';
 import {FilterQuery, ProjectionType, QueryOptions, UpdateQuery} from 'mongoose';
-import {UserDto} from '@shared/dto/database/user.dto';
+import {User} from '@users/entities/user.entity';
 import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
 export class DatabaseService<T, S extends T & ReadableDocument> {
@@ -46,11 +46,11 @@ export class DatabaseService<T, S extends T & ReadableDocument> {
     return await this.repository.updateOneByQuery(filterQuery, updateQuery, options);
   }
 
-  async archiveOneById(user: UserDto, id: string): Promise<S | null> {
+  async archiveOneById(user: User, id: string): Promise<S | null> {
     return await this.repository.archiveOneById(user, id);
   }
 
-  async archiveOneByQuery(user: UserDto, filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
+  async archiveOneByQuery(user: User, filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
     return await this.repository.archiveOneByQuery(user, filterQuery, options);
   }
 

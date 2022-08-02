@@ -59,6 +59,9 @@
       ],
       "@notifications/*": [
         "src/app/features/notifications/*"
+      ],
+      "@users/*": [
+        "src/app/features/users/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
 import {FilterQuery, Model, ProjectionType, QueryOptions, SaveOptions, UpdateQuery} from 'mongoose';
 import {DocumentStatus} from '@shared/models/database/document-metadata.model';
-import {UserDto} from '@shared/dto/database/user.dto';
+import {User} from '@users/entities/user.entity';
 import {ReadableDocument} from '@shared/models/database/readable-document.model';
 
 export class DatabaseRepository<T, S extends T & ReadableDocument> {
@@ -52,7 +52,7 @@ export class DatabaseRepository<T, S extends T & ReadableDocument> {
     return await this.model.findOneAndUpdate(filterQuery, updateQuery, options).exec();
   }
 
-  async archiveOneById(user: UserDto, id: string, options?: QueryOptions<T>): Promise<S | null> {
+  async archiveOneById(user: User, id: string, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model
       .findByIdAndUpdate(
         id,
@@ -67,7 +67,7 @@ export class DatabaseRepository<T, S extends T & ReadableDocument> {
       .exec();
   }
 
-  async archiveOneByQuery(user: UserDto, filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
+  async archiveOneByQuery(user: User, filterQuery: FilterQuery<S>, options?: QueryOptions<T>): Promise<S | null> {
     return await this.model
       .findOneAndUpdate(
         filterQuery,
